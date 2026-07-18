@@ -1,0 +1,73 @@
+{
+  "name": "rpki-network",
+  "version": "1.0.0",
+  "client": {
+    "organization": "Org1",
+    "connection": {
+      "timeout": {
+        "peer": {
+          "endorser": "300"
+        }
+      }
+    }
+  },
+  "organizations": {
+    "Org1": {
+      "mspid": "Org1MSP",
+      "peers": ["peer0.org1.example.com"],
+      "certificateAuthorities": ["ca.org1.example.com"],
+      "adminPrivateKey": "/home/xfn/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore",
+      "signedCert": "/home/xfn/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts"
+    }
+  },
+  "peers": {
+    "peer0.org1.example.com": {
+      "url": "grpc://localhost:7051",
+      "eventUrl": "grpc://localhost:7053",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.org1.example.com",
+        "keep-alive-time": "0s",
+        "keep-alive-timeout": "20s",
+        "keep-alive-permit-without-calls": false,
+        "max-connection-idle": "30s",
+        "max-connection-age": "2m",
+        "max-connection-age-grace": "5s"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.org1.example.com": {
+      "url": "http://localhost:7054",
+      "httpOptions": {
+        "verify": false
+      }
+    }
+  },
+  "channels": {
+    "mychannel": {
+      "orderers": ["orderer.example.com"],
+      "peers": {
+        "peer0.org1.example.com": {
+          "endorsingPeer": true,
+          "chaincodeQuery": true,
+          "ledgerQuery": true,
+          "eventSource": true
+        }
+      }
+    }
+  },
+  "orderers": {
+    "orderer.example.com": {
+      "url": "grpc://localhost:7050",
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer.example.com",
+        "keep-alive-time": "0s",
+        "keep-alive-timeout": "20s",
+        "keep-alive-permit-without-calls": false,
+        "max-connection-idle": "30s",
+        "max-connection-age": "2m",
+        "max-connection-age-grace": "5s"
+      }
+    }
+  }
+}

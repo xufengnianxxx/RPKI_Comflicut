@@ -1,0 +1,9 @@
+{
+  "name": "rpki-conflict-checker-backend-tools",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Thesis test harness scripts",
+  "scripts": {
+    "caliper:test": "npm --prefix ./caliper run test"
+  }
+}

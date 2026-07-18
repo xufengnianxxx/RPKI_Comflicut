@@ -1,0 +1,13 @@
+{
+  "name": "rpki-demo-web-ui",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Node.js frontend for RPKI demo flow",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

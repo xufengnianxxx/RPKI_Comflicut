@@ -1,0 +1,31 @@
+spring:
+  datasource:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USER}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+rpki:
+  data-root: ${RPKI_DATA_ROOT:${user.dir}/rpki-data}
+  download:
+    dir: ${rpki.data-root}/downloads
+  extract:
+    dir: ${rpki.data-root}/extracted
+  sync:
+    scheduled-enabled: ${RPKI_SCHEDULED_SYNC:false}
+    skip-download-if-local: ${RPKI_SKIP_DOWNLOAD_IF_LOCAL:true}
+    reparse-local-when-cached: ${RPKI_REPARSE_LOCAL_WHEN_CACHED:false}
+    cron: ${RPKI_SYNC_CRON:0 0 1 * * ?}
+  startup:
+    auto-detect-conflicts: ${RPKI_STARTUP_AUTO_DETECT:false}
+
+fabric:
+  mode: ${FABRIC_MODE:REAL}
+  gateway:
+    connection-profile: ${FABRIC_CONNECTION_PROFILE}
+  channel: ${FABRIC_CHANNEL}
+  chaincode: ${FABRIC_CHAINCODE}
+  wallet:
+    path: ${FABRIC_WALLET_PATH}
+  identity:
+    label: ${FABRIC_IDENTITY}

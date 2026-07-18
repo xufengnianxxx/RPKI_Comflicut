@@ -1,0 +1,5 @@
+/*
+ * 目录名须与 test-network 部署名一致：packageCC.sh 使用 build/install/<-ccn 参数>。
+ * 默认 rpkiccjava，与 FABRIC_THESIS_ROADMAP / application-dev.yml 一致。
+ */
+rootProject.name = System.getenv('CHAINCODE_NAME') ?: 'rpkiccjava'

@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: rpki-conflict-checker
+  profiles:
+    active: dev
+
+server:
+  port: 8082
+  servlet:
+    context-path: /api
+
+logging:
+  level:
+    root: INFO
+    com.rpki: INFO
+  file:
+    name: logs/rpki-checker.log
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+rpki:
+  bulk-import:
+    enabled: false
+  test:
+    functional:
+      # 功能测试数据目录（相对 user.dir，含 functional-manifest.json、certs/、expected/）
+      data-dir: qidongjiaoben/test-data
+      # 默认关闭，避免环境暴露；开发 profile 可开启
+      rest-enabled: false
+
+# Fabric 存证：检测完成后自动上链见 fabric.anchor.auto-after-detect
+fabric:
+  anchor:
+    auto-after-detect: false
+    mock-persist-db: true
+    max-conflicts-per-run: 500
+    details-short-max: 512
+    retry-max: 3
+    retry-delay-ms: 400

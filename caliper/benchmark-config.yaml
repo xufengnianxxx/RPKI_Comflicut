@@ -1,0 +1,56 @@
+test:
+  workers:
+    type: local
+    number: 1
+  rounds:
+    - label: query-functional-report
+      description: Query last functional report
+      txNumber: 50
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 20
+      workload:
+        module: workloads/query-functional-report.js
+    - label: run-functional-small
+      description: Trigger functional run
+      txNumber: 10
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 2
+      workload:
+        module: workloads/run-functional-small.js
+    - label: get-certs-page
+      description: Query cert page
+      txNumber: 200
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 50
+      workload:
+        module: workloads/get-certs-page.js
+    - label: detect-pair
+      description: Persisted pair detect API
+      txNumber: 100
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 25
+      workload:
+        module: workloads/detect-pair.js
+monitor:
+  type:
+    - docker
+    - process
+  docker:
+    containers:
+      - all
+  process:
+    - command: "java"
+      multiOutput: avg
+      metrics:
+        cpu:
+          - percent
+        memory:
+          - rss

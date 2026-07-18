@@ -1,0 +1,57 @@
+/*
+ * 供 fabric-samples test-network 的 packageCC.sh 调用：./gradlew installDist
+ * 依赖与 pom.xml 对齐；链码入口 rpkiccjava.RpkiccjavaChaincodeMain
+ */
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+}
+
+group = 'com.rpki.fabric'
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation('org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.5.5') {
+        exclude group: 'com.github.everit-org.json-schema', module: 'org.everit.json.schema'
+    }
+    implementation 'com.github.erosb:everit-json-schema:1.14.4'
+    implementation 'com.google.code.gson:gson:2.10.1'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
+
+application {
+    mainClass = 'rpkiccjava.RpkiccjavaChaincodeMain'
+}
+
+shadowJar {
+    archiveBaseName = 'chaincode'
+    archiveVersion = ''
+    archiveClassifier = ''
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    mergeServiceFiles()
+    manifest {
+        attributes 'Main-Class': 'rpkiccjava.RpkiccjavaChaincodeMain'
+    }
+}
+
+tasks.named('startScripts') {
+    dependsOn tasks.shadowJar
+}
+
+tasks.withType(CreateStartScripts).configureEach {
+    classpath = files(tasks.shadowJar.outputs.files)
+}
+
+tasks.named('installDist') {
+    dependsOn tasks.shadowJar
+}

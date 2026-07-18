@@ -1,0 +1,58 @@
+{
+  "name": "rpkicc-fabric-network",
+  "version": "2.0.0",
+  "caliper": {
+    "blockchain": "fabric"
+  },
+  "channels": {
+    "mychannel": {
+      "created": true,
+      "contracts": [
+        {
+          "id": "rpkiccjava"
+        }
+      ]
+    }
+  },
+  "organizations": {
+    "Org1": {
+      "mspid": "Org1MSP",
+      "peers": [
+        "peer0.org1.example.com"
+      ],
+      "certificateAuthorities": [
+        "ca.org1.example.com"
+      ]
+    }
+  },
+  "peers": {
+    "peer0.org1.example.com": {
+      "url": "grpcs://localhost:7051",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.org1.example.com"
+      },
+      "tlsCACerts": {
+        "path": "../fabric-network/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem"
+      }
+    }
+  },
+  "certificateAuthorities": {
+    "ca.org1.example.com": {
+      "url": "https://localhost:7054",
+      "caName": "ca-org1",
+      "tlsCACerts": {
+        "path": "../fabric-network/crypto-config/peerOrganizations/org1.example.com/ca/ca.org1.example.com-cert.pem"
+      }
+    }
+  },
+  "clients": {
+    "client0.org1.example.com": {
+      "client": {
+        "organization": "Org1",
+        "credentialStore": {
+          "path": "./caliper-wallet"
+        }
+      }
+    }
+  }
+}

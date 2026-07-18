@@ -1,0 +1,1 @@
+{"defRef":"D2","expectedOfflineTypes":["IP_CONTAINMENT_PEER"],"kind":"PEER","formalDefNote":"D2(形式) 在实现中先命中 D1(包含) — 见 冲突规则 与 isIPv4CidrContains 优先序"}

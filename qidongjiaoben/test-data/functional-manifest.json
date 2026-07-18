@@ -1,0 +1,364 @@
+{
+  "version": 1,
+  "description": "与 RpkiUnifiedConflictDetectionService 对齐的 manifest；链上 L1~L3 为 Fabric 层命名，对应 IPv4 区间三分类，见 冲突规则.md 第六节。",
+  "cases": [
+    {
+      "id": "TC01",
+      "name": "D1/L1  IPv4 包含",
+      "defRef": "D1",
+      "kind": "PEER",
+      "files": [
+        "TC01_A.cer",
+        "TC01_B.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC01_A.cer",
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC01_B.cer",
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "IP_CONTAINMENT_PEER"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "TC02",
+      "name": "D2(形式) / L2(链上)  典型槽位(3,4)  实现归类为包含",
+      "defRef": "D2",
+      "formalDefNote": "D2(形式) 在实现中先命中 D1(包含) — 见 冲突规则 与 isIPv4CidrContains 优先序",
+      "kind": "PEER",
+      "files": [
+        "TC02_A.cer",
+        "TC02_B.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC02_A.cer",
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC02_B.cer",
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "IP_CONTAINMENT_PEER"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "TC03",
+      "name": "D3  IPv4 同长相邻",
+      "defRef": "D3",
+      "kind": "PEER",
+      "files": [
+        "TC03_A.cer",
+        "TC03_B.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC03_A.cer",
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC03_B.cer",
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "IP_ADJACENT_BORDER"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "TC04",
+      "name": "D4  IPv6 包含",
+      "defRef": "D4",
+      "kind": "PEER",
+      "files": [
+        "TC04_A.cer",
+        "TC04_B.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC04_A.cer",
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC04_B.cer",
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "IP6_CONTAINMENT_PEER"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "TC05",
+      "name": "D5(形式)  IPv6 重叠(构造)  实现为包含",
+      "defRef": "D5",
+      "formalDefNote": "D5(形式) 在实现中先命中 D4(包含)",
+      "kind": "PEER",
+      "files": [
+        "TC05_A.cer",
+        "TC05_B.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC05_A.cer",
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC05_B.cer",
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "IP6_CONTAINMENT_PEER"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "TC06",
+      "name": "D6(形式) / 实现  IPv6 含或邻（见 formalDefNote）",
+      "defRef": "D6",
+      "formalDefNote": "若两前缀归一为同一/64 则实现报 IP6_CONTAINMENT_peer；与冲突测试构造方案(11,12) 可能因解析边界而异",
+      "kind": "PEER",
+      "files": [
+        "TC06_A.cer",
+        "TC06_B.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC06_A.cer",
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC06_B.cer",
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "IP6_CONTAINMENT_PEER"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "TC07",
+      "name": "D7  IPv4 子越权",
+      "defRef": "D7",
+      "kind": "PEER",
+      "files": [
+        "TC07_C.cer",
+        "TC07_P.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC07_C.cer",
+          "parentId": 2,
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC07_P.cer",
+          "parentId": 1,
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "IP_OUT_OF_SCOPE"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "TC08",
+      "name": "D8  IPv6 子越权",
+      "defRef": "D8",
+      "kind": "PEER",
+      "files": [
+        "TC08_C.cer",
+        "TC08_P.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC08_C.cer",
+          "parentId": 2,
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC08_P.cer",
+          "parentId": 1,
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "IP6_OUT_OF_SCOPE"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "TC09",
+      "name": "D9  AS 子越权",
+      "defRef": "D9",
+      "kind": "PEER",
+      "files": [
+        "TC09_C.cer",
+        "TC09_P.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC09_C.cer",
+          "parentId": 2,
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC09_P.cer",
+          "parentId": 1,
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "AS_OUT_OF_SCOPE"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    },
+    {
+      "id": "TC10",
+      "name": "D10  祖先已撤销而叶未撤销(多跳)",
+      "defRef": "D10",
+      "kind": "CHAIN_MULTI",
+      "files": [
+        "TC10_L.cer",
+        "TC10_P.cer",
+        "TC10_G.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC10_L.cer",
+          "parentId": 2,
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC10_P.cer",
+          "parentId": 3,
+          "revoked": true
+        },
+        {
+          "id": 3,
+          "file": "TC10_G.cer",
+          "revoked": true
+        }
+      ],
+      "expectedOfflineTypes": [
+        "CHAIN_REVOKED_ANCESTOR_ACTIVE"
+      ]
+    },
+    {
+      "id": "TC11",
+      "name": "D11  父已撤销子仍活(直接父子，parent_cert_id)",
+      "defRef": "D11",
+      "kind": "CHAIN_REVOKE",
+      "files": [
+        "TC11_C.cer",
+        "TC11_P.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC11_C.cer",
+          "parentId": 2,
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC11_P.cer",
+          "revoked": true
+        }
+      ],
+      "expectedOfflineTypes": [
+        "CHAIN_RESIDUAL_AFTER_REVOKE"
+      ]
+    },
+    {
+      "id": "TC12",
+      "name": "D12  对等 AS 授权交集(仅 AS，桶 -1)",
+      "defRef": "D12",
+      "kind": "PEER",
+      "files": [
+        "TC12_A.cer",
+        "TC12_B.cer"
+      ],
+      "entries": [
+        {
+          "id": 1,
+          "file": "TC12_A.cer",
+          "revoked": false
+        },
+        {
+          "id": 2,
+          "file": "TC12_B.cer",
+          "revoked": false
+        }
+      ],
+      "expectedOfflineTypes": [
+        "AS_OVERLAP_PEER"
+      ],
+      "primaryPair": [
+        1,
+        2
+      ]
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+
+# Build
+target/
+.classpath
+.project
+.settings/
+bin/
+
+# Maven
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+.m2/
+
+# Gradle
+.gradle
+build/
+gradle/
+
+# STS
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache/
+
+# Logs
+logs/
+*.log
+app*.log
+log/
+wallet/
+
+# Maven wrapper
+.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.properties
+
+# RPKI 证书目录（下载的 repo 包与解压后的 .cer）
+/rpki-certs/
+/rpki-data/
+
+# Fabric
+connection-profile.json
+*.pem
+*.key
+
+# Node
+node_modules/
+package-lock.json
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Local runtime data
+wallet/
+
+# System
+Thumbs.db
+.DS_Store

@@ -1,0 +1,4 @@
+caliper:
+  blockchain: fabric
+  sutOptions:
+    mutualTls: false

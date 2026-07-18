@@ -1,0 +1,1 @@
+{"defRef":"D6","expectedOfflineTypes":["IP6_CONTAINMENT_PEER"],"kind":"PEER","formalDefNote":"若两前缀归一为同一/64 则实现报 IP6_CONTAINMENT_peer；与冲突测试构造方案(11,12) 可能因解析边界而异"}

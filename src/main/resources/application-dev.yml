@@ -1,0 +1,65 @@
+# =============================================================================
+# 开发 / 联调配置（profile=dev）
+# 复制使用前请将路径、密码改为本机实际值。
+# =============================================================================
+
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/rpki_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: ${MYSQL_USER:root}
+    password: ${MYSQL_PASSWORD:root}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+rpki:
+  download:
+    dir: ${RPKI_DOWNLOAD_DIR:${user.home}/rpki-data/downloads}
+  extract:
+    dir: ${RPKI_EXTRACT_DIR:${user.home}/rpki-data/extracted}
+  sync:
+    scheduled-enabled: false
+    skip-download-if-local: true
+    reparse-local-when-cached: false
+    retry-count: 3
+    rirs: RIPE,APNIC,ARIN
+  sources:
+    auto-resolve-latest: true
+    mirror-base: https://ftp.ripe.net/rpki/
+    ripe: https://ftp.ripe.net/rpki/ripencc.tal/2026/04/09/repo.tar.xz
+    apnic: https://ftp.ripe.net/rpki/apnic.tal/2026/04/09/repo.tar.xz
+    arin: https://ftp.ripe.net/rpki/arin.tal/2026/04/09/repo.tar.xz
+    demo: ""
+    demo-month-base: ""
+    demo-month-max-day: 31
+  conflict:
+    use-dn-fallback-for-resource-parent: false
+    restrict-peer-conflicts: true
+    require-aki-ski-for-delegated-scope: true
+  bulk-import:
+    # 仅当 enabled=true 且 root 为有效目录时才在启动时导入（避免空 root 扫整个项目）
+    enabled: ${RPKI_BULK_ENABLED:false}
+    root: ${RPKI_BULK_ROOT:}
+    rir: ""
+    batch-size: 400
+  test:
+    functional:
+      rest-enabled: true
+      data-dir: qidongjiaoben/test-data
+
+fabric:
+  mode: REAL
+  msp-id: Org1MSP
+  gateway:
+    # 含 Org1+Org2 peer 与 orderer，与 test-network 默认背书策略一致，detect SUBMIT 需多组织一致模拟
+    connection-profile: ${FABRIC_CONN_PROFILE:/home/xfn/rpki-conflict-checker-backend/fabric-network/connection-org1-org2-mychannel.json}
+  channel: mychannel
+  chaincode: rpkiccjava
+  wallet:
+    path: /home/xfn/rpki-conflict-checker-backend/wallet   # 建议使用项目内的 wallet
+  identity:
+    label: admin
+    cert-path: /home/xfn/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/signcerts/cert.pem
+    key-path: /home/xfn/fabric-samples/test-network/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp/keystore/2907eac16cd77f901f5f551b0c28b801d91766c8a140335315850cd9be083af1_sk
+  anchor:
+    auto-after-detect: true
+    retry-max: 3
+    retry-delay-ms: 400
